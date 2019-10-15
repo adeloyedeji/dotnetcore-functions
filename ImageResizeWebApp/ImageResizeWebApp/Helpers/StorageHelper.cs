@@ -27,6 +27,16 @@ namespace ImageResizeWebApp.Helpers
             return formats.Any(item => file.FileName.EndsWith(item, StringComparison.OrdinalIgnoreCase));
         }
 
+        public static string UseLowerCaseImageExtension(IFormFile file)
+        {
+            string[] formats = new string[] { ".jpg", ".png", ".gif", ".jpeg" };
+            string[] splittedFileName = file.FileName.Split('.');
+
+            string lowerCaseExtension = formats.FirstOrDefault(item => file.FileName.EndsWith(item, StringComparison.OrdinalIgnoreCase));
+
+            return Guid.NewGuid().ToString() + lowerCaseExtension;
+        }
+
         public static async Task<bool> UploadFileToStorage(Stream fileStream, string fileName, AzureStorageConfig _storageConfig)
         {
             // Create storagecredentials object by reading the values from the configuration (appsettings.json)
